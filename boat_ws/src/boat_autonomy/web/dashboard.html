@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Boat Autonomy Console</title>
+  <style>
+    :root{--bg:#071019;--panel:#0d1b27;--line:#22384a;--text:#e9f2f7;
+      --muted:#89a1b3;--cyan:#30d5c8;--blue:#47a7ff;--amber:#ffbf47;
+      --red:#ff6070;--green:#5ee38d}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 70% 0,
+      #12324a 0,#071019 38%);color:var(--text);font:14px/1.45 system-ui,sans-serif}
+    header{height:62px;padding:0 22px;display:flex;align-items:center;justify-content:
+      space-between;border-bottom:1px solid var(--line);background:#071019dd;position:
+      sticky;top:0;z-index:3;backdrop-filter:blur(10px)}
+    h1{font-size:17px;letter-spacing:.14em;margin:0}.live{display:flex;gap:10px;
+      align-items:center;color:var(--muted)}.dot{width:9px;height:9px;border-radius:50%;
+      background:var(--red);box-shadow:0 0 12px currentColor}.dot.on{background:var(--green)}
+    main{padding:14px;display:grid;grid-template-columns:minmax(430px,1.25fr)
+      minmax(360px,1fr);gap:14px;max-width:1800px;margin:auto}
+    .panel{background:linear-gradient(145deg,#102230ee,#091722ee);border:1px solid
+      var(--line);border-radius:12px;overflow:hidden;box-shadow:0 14px 35px #0005}
+    .title{height:42px;padding:0 14px;display:flex;align-items:center;justify-content:
+      space-between;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.13em;
+      color:#a9c1d2;text-transform:uppercase}.camera{aspect-ratio:16/9;background:#02070b;
+      display:grid;place-items:center;position:relative}.camera img{width:100%;height:100%;
+      object-fit:contain}.camera .no-video{position:absolute;color:var(--muted)}
+    #cameraOverlay{position:absolute;inset:0;pointer-events:none}.view-toggle{display:flex;
+      align-items:center;gap:6px;color:var(--muted);font-size:11px;letter-spacing:0;
+      text-transform:none}.view-toggle input{accent-color:var(--cyan)}
+    .map{height:calc(min(56vw,560px));min-height:390px;position:relative}
+    canvas{width:100%;height:100%;display:block}.map-key{position:absolute;left:14px;bottom:12px;
+      color:var(--muted);font-size:11px;background:#071019cc;padding:7px 9px;border-radius:7px}
+    .map-tools{position:absolute;right:12px;top:12px;display:flex;gap:6px}.map-tools button{
+      border:1px solid #385268;background:#091722dd;color:#d8e7ef;border-radius:7px;
+      min-width:34px;height:32px;padding:0 9px;font-weight:700;cursor:pointer}.map-tools button:hover{
+      border-color:var(--cyan);color:var(--cyan)}#map{cursor:grab}#map.dragging{cursor:grabbing}
+    .map-tools button.active{border-color:var(--amber);color:var(--amber);background:#31240ddd}
+    .heat-legend{position:absolute;right:12px;bottom:12px;width:170px;background:#071019dd;
+      padding:7px 9px;border-radius:7px;color:var(--muted);font-size:10px}.heat-bar{height:7px;
+      margin:4px 0;background:linear-gradient(90deg,#2864ff,#28d7d0,#ffe04b,#ff493f);
+      border-radius:5px}.heat-range{display:flex;justify-content:space-between}
+    .cards{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+    .card{background:#0d1b27;border:1px solid var(--line);border-radius:10px;padding:12px;
+      min-height:96px}.label{color:var(--muted);font-size:10px;letter-spacing:.12em;
+      text-transform:uppercase}.value{font-size:25px;font-weight:650;margin-top:7px;
+      font-variant-numeric:tabular-nums}.unit{font-size:12px;color:var(--muted);margin-left:3px}
+    .mode{color:var(--cyan)}.good{color:var(--green)}.warn{color:var(--amber)}
+    .bad{color:var(--red)}.meter{height:5px;background:#263746;border-radius:5px;
+      margin-top:11px;overflow:hidden}.meter i{display:block;height:100%;width:0;background:var(--cyan)}
+    .commands{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .command{display:flex;align-items:center;gap:14px}.wheel{width:64px;height:64px;
+      border:2px solid #466174;border-radius:50%;position:relative;flex:none}.wheel:before{
+      content:'';position:absolute;width:2px;height:27px;background:var(--cyan);left:29px;
+      top:4px;transform-origin:1px 27px;transform:rotate(var(--turn,0deg));box-shadow:0 0 8px var(--cyan)}
+    .small{font-size:12px;color:var(--muted)}.row{display:flex;justify-content:space-between;
+      margin-top:4px}.footer{grid-column:1/-1;color:var(--muted);font-size:11px;
+      text-align:right;padding:3px 4px 10px}.recordings{grid-column:1/-1;padding:14px}
+    .record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.record-group{
+      border:1px solid var(--line);border-radius:9px;padding:12px;background:#091722}.record-actions{
+      display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.record-actions button{border:1px solid
+      #385268;background:#102636;color:var(--text);border-radius:7px;padding:8px 11px;
+      cursor:pointer}.record-actions button:hover{border-color:var(--cyan)}.record-actions button.stop{
+      border-color:#74404a;color:#ff9ca7}.record-actions button:disabled{opacity:.4;cursor:not-allowed}
+    .record-state{font-weight:700}.record-state.on{color:var(--red)}
+    @media(max-width:1000px){main{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(3,1fr)}.commands{grid-template-columns:1fr}}
+    @media(max-width:800px){.record-grid{grid-template-columns:1fr}}
+    @media(max-width:600px){.cards{grid-template-columns:repeat(2,1fr)}main{padding:8px}.map{min-height:330px}}
+  </style>
+</head>
+<body>
+<header><h1>BOAT AUTONOMY CONSOLE</h1><div class="live"><span id="statusText">연결 대기</span><i id="dot" class="dot"></i></div></header>
+<main>
+  <section class="panel"><div class="title"><span>Camera / YOLO</span><span><label class="view-toggle"><input id="deadbandToggle" type="checkbox">Deadband</label> <b id="trashBadge">NO TARGET</b></span></div>
+    <div class="camera"><span class="no-video">카메라 스트림 대기 중</span><img id="cameraImage" src="/stream.mjpg" alt="camera"><canvas id="cameraOverlay"></canvas></div></section>
+  <section class="panel"><div class="title"><span>Global Route</span><span id="routeName">—</span></div>
+    <div class="map"><canvas id="map"></canvas><div class="map-tools"><button id="heatOff" class="active">HEAT OFF</button><button id="heatPh">pH</button><button id="heatDo">DO</button><button id="heatTurbidity">TURBIDITY</button><button id="zoomOut">−</button><button id="fitMap">FIT</button><button id="zoomIn">+</button></div><div id="heatLegend" class="heat-legend" hidden><b id="heatLabel">pH</b><div class="heat-bar"></div><div class="heat-range"><span id="heatMin">—</span><span id="heatMax">—</span></div></div><div class="map-key">● Route sample　◆ Start　▲ Boat / Heading · Wheel zoom / Drag</div></div></section>
+  <section class="cards">
+    <div class="card"><div class="label">Mode</div><div id="mode" class="value mode">—</div><div id="modeAge" class="small">—</div></div>
+    <div class="card"><div class="label">GPS</div><div id="gps" class="value">—</div><div id="gpsDetail" class="small">—</div></div>
+    <div class="card"><div class="label">Heading</div><div><span id="heading" class="value">—</span><span class="unit">deg</span></div></div>
+    <div class="card"><div class="label">Trash confidence</div><div><span id="confidence" class="value">—</span><span class="unit">%</span></div><div class="meter"><i id="confidenceBar"></i></div></div>
+    <div class="card"><div class="label">Turbidity</div><div><span id="turbidity" class="value">—</span><span class="unit">NTU</span></div><div class="meter"><i id="turbidityBar"></i></div></div>
+    <div class="card"><div class="label">Water</div><div class="row"><span>pH</span><b id="ph">—</b></div><div class="row"><span>DO</span><b id="do">—</b></div></div>
+  </section>
+  <section class="commands">
+    <div class="panel card command"><div id="wheel" class="wheel"></div><div><div class="label">Final command</div><div><span id="direction" class="value">—</span><span class="unit">deg</span></div><div class="small">Output <b id="output">—</b> / 10</div><div class="small">TEL age <b id="telAge">—</b> · CMD age <b id="cmdAge">—</b></div></div></div>
+    <div class="panel card"><div class="label">Guidance</div><div class="row"><span>Global direction</span><b id="globalDirection">—</b></div><div class="row"><span>Global output</span><b id="globalOutput">—</b></div><div class="row"><span>Cross-track error</span><b id="cte">—</b></div><div class="row"><span>Target speed</span><b id="targetSpeed">—</b></div></div>
+    <div class="panel card"><div class="label">Detected target</div><div class="row"><span>Image position</span><b id="targetXY">—</b></div><div class="row"><span>Box area</span><b id="targetArea">—</b></div><div class="row"><span>Track ID</span><b id="trackId">—</b></div><div class="small" style="margin-top:8px">단안 카메라 좌표이며 지도상 절대 위치가 아닙니다.</div></div>
+  </section>
+  <section class="panel recordings"><div class="title"><span>Recording</span><span id="recordMessage">READY</span></div>
+    <div class="record-grid">
+      <div class="record-group"><div class="label">Camera original</div><div id="rawState" class="record-state">STOPPED</div><div class="record-actions"><button id="rawCapture">사진 캡처</button><button id="rawStart">녹화 시작</button><button id="rawStop" class="stop">녹화 종료</button></div></div>
+      <div class="record-group"><div class="label">Detection overlay</div><div id="debugState" class="record-state">STOPPED</div><div class="record-actions"><button id="debugStart">탐지 영상 시작</button><button id="debugStop" class="stop">탐지 영상 종료</button></div></div>
+      <div class="record-group"><div class="label">Mission CSV</div><div id="logState" class="record-state">STOPPED</div><div class="small">GPS · Heading · NTU · pH · DO · Final CMD</div><div class="record-actions"><button id="logStart">로그 시작</button><button id="logStop" class="stop">로그 종료</button></div></div>
+    </div>
+  </section>
+  <div id="updated" class="footer">데이터 대기 중</div>
+</main>
+<script>
+const $=id=>document.getElementById(id), fmt=(v,n=2)=>Number.isFinite(v)?v.toFixed(n):'—';
+let state=null,lastOk=0,mapView={zoom:1,offsetX:0,offsetY:0},drag=null,mapUrl='',mapImage=new Image(),heatLayer=document.createElement('canvas'),heatmap={samples:[],ranges:{}},heatMode='off';
+mapImage.onload=()=>state&&drawMap(state);
+async function refresh(){try{const r=await fetch('/api/state',{cache:'no-store'});state=await r.json();lastOk=Date.now();render(state)}catch(e){}updateConnection()}
+async function refreshHeatmap(){try{const r=await fetch('/api/heatmap',{cache:'no-store'});heatmap=await r.json();if(heatMode!=='off')setHeatMode(heatMode)}catch(e){}}
+function age(s,key){return s.ages&&Number.isFinite(s.ages[key])?s.ages[key]:999}
+function render(s){const t=s.telemetry||{},tar=s.target||{},cmd=s.final_command||{},g=s.global_command||{},rec=s.recording||{};
+  $('mode').textContent=s.mode||'UNKNOWN';$('modeAge').textContent=`${fmt(age(s,'mode'),1)} s ago`;
+  const fixed=t.gps_fix>0;$('gps').textContent=fixed?'FIX':'NO FIX';$('gps').className='value '+(fixed?'good':'bad');
+  $('gpsDetail').textContent=fixed?`${fmt(t.latitude,6)}, ${fmt(t.longitude,6)}`:'telemetry 대기';
+  $('heading').textContent=fmt(t.heading_deg,1);$('confidence').textContent=tar.detected?fmt(tar.confidence*100,1):'0.0';
+  $('confidenceBar').style.width=`${Math.max(0,Math.min(100,(tar.confidence||0)*100))}%`;
+  $('trashBadge').textContent=tar.detected?'TARGET DETECTED':'NO TARGET';$('trashBadge').className=tar.detected?'good':'';
+  $('turbidity').textContent=fmt(t.turbidity_ntu,1);$('turbidityBar').style.width=`${Math.max(0,Math.min(100,(t.turbidity_ntu||0)))}%`;
+  $('ph').textContent=fmt(t.ph,2);$('do').textContent=`${fmt(t.do_mgl,2)} mg/L`;
+  $('direction').textContent=fmt(cmd.direction,1);$('output').textContent=fmt(cmd.output,2);$('wheel').style.setProperty('--turn',`${cmd.direction||0}deg`);
+  $('telAge').textContent=Number.isFinite(s.telemetry_age)?`${fmt(s.telemetry_age,2)} s`:'—';$('cmdAge').textContent=s.ages&&Number.isFinite(s.ages.final_command)?`${fmt(s.ages.final_command,2)} s`:'—';
+  $('globalDirection').textContent=`${fmt(g.direction,1)}°`;$('globalOutput').textContent=fmt(g.output,2);
+  $('cte').textContent=`${fmt(s.cross_track_error,2)} m`;$('targetSpeed').textContent=`${fmt(s.target_speed,2)} m/s`;
+  $('targetXY').textContent=tar.detected?`${fmt(tar.center_x,0)}, ${fmt(tar.center_y,0)} px`:'—';
+  $('targetArea').textContent=tar.detected?`${fmt(tar.area_ratio*100,2)} %`:'—';$('trackId').textContent=tar.detected?fmt(tar.track_id,0):'—';
+  $('rawState').textContent=rec.raw?'RECORDING':'STOPPED';$('rawState').className='record-state'+(rec.raw?' on':'');
+  $('debugState').textContent=rec.debug?'RECORDING':'STOPPED';$('debugState').className='record-state'+(rec.debug?' on':'');
+  $('logState').textContent=rec.log?'RECORDING':'STOPPED';$('logState').className='record-state'+(rec.log?' on':'');
+  $('rawStart').disabled=!!rec.raw;$('rawStop').disabled=!rec.raw;$('debugStart').disabled=!!rec.debug;$('debugStop').disabled=!rec.debug;$('logStart').disabled=!!rec.log;$('logStop').disabled=!rec.log;
+  $('recordMessage').textContent=rec.message||'READY';$('routeName').textContent=(s.route&&s.route.name)||'—';$('updated').textContent=`Dashboard uptime ${fmt(s.uptime,0)} s · telemetry age ${fmt(age(s,'telemetry'),1)} s`;const nextMap=(s.route&&s.route.background_url)||'';if(nextMap!==mapUrl){mapUrl=nextMap;if(mapUrl)mapImage.src=mapUrl}drawDeadband(s);drawMap(s)}
+function updateConnection(){const ok=Date.now()-lastOk<1500;$('dot').className='dot'+(ok?' on':'');$('statusText').textContent=ok?'LIVE':'연결 끊김'}
+function drawMap(s){const c=$('map'),dpr=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.fillStyle='#07131d';x.fillRect(0,0,w,h);
+  const bounds=(s.route||{}).map_bounds,pts=((s.route||{}).waypoints||[]).map(p=>({lat:p.latitude,lon:p.longitude})),t=s.telemetry||{};if(bounds)pts.push({lat:bounds.north,lon:bounds.west,mapCorner:true},{lat:bounds.south,lon:bounds.east,mapCorner:true});if(Number.isFinite(t.latitude)&&Number.isFinite(t.longitude)&&t.gps_fix>0)pts.push({lat:t.latitude,lon:t.longitude,boat:true});if(!pts.length){x.fillStyle='#89a1b3';x.fillText('경로 데이터 없음',20,30);return}
+  const lat0=pts.reduce((a,p)=>a+p.lat,0)/pts.length,cs=Math.cos(lat0*Math.PI/180);let xy=pts.map(p=>({x:p.lon*cs,y:p.lat,boat:p.boat,mapCorner:p.mapCorner}));let minX=Math.min(...xy.map(p=>p.x)),maxX=Math.max(...xy.map(p=>p.x)),minY=Math.min(...xy.map(p=>p.y)),maxY=Math.max(...xy.map(p=>p.y));let dx=Math.max(maxX-minX,1e-7),dy=Math.max(maxY-minY,1e-7),pad=42,sc=Math.min((w-pad*2)/dx,(h-pad*2)/dy),cx=w/2,cy=h/2;const cv=p=>{const bx=pad+(p.x-minX)*sc,by=h-pad-(p.y-minY)*sc;return{x:cx+(bx-cx)*mapView.zoom+mapView.offsetX,y:cy+(by-cy)*mapView.zoom+mapView.offsetY}};let route=xy.filter(p=>!p.boat&&!p.mapCorner).map(cv);
+  if(bounds&&mapImage.complete&&mapImage.naturalWidth){const nw=cv({x:bounds.west*cs,y:bounds.north}),se=cv({x:bounds.east*cs,y:bounds.south});x.save();x.globalAlpha=.72;x.drawImage(mapImage,nw.x,nw.y,se.x-nw.x,se.y-nw.y);x.restore();x.fillStyle='#07131d33';x.fillRect(0,0,w,h)}
+  x.strokeStyle='#295069';x.lineWidth=1;for(let i=1;i<5;i++){x.beginPath();x.moveTo(0,h*i/5);x.lineTo(w,h*i/5);x.stroke();x.beginPath();x.moveTo(w*i/5,0);x.lineTo(w*i/5,h);x.stroke()}
+  if(heatMode!=='off'){const key=heatMode==='ph'?'ph':heatMode==='do'?'do_mgl':'turbidity_ntu',range=(heatmap.ranges||{})[heatMode]||[0,1],span=Math.max(range[1]-range[0],1e-6),radius=6,lw=Math.max(1,Math.round(w)),lh=Math.max(1,Math.round(h)),maxLink=Number(heatmap.connect_distance_m)||3;if(heatLayer.width!==lw||heatLayer.height!==lh){heatLayer.width=lw;heatLayer.height=lh}const hx=heatLayer.getContext('2d');hx.clearRect(0,0,w,h),items=(heatmap.samples||[]).filter(q=>Number.isFinite(q.latitude)&&Number.isFinite(q.longitude)&&Number.isFinite(q[key])).map(q=>{const v=Math.max(0,Math.min(1,(q[key]-range[0])/span));return{...q,p:cv({x:q.longitude*cs,y:q.latitude}),hue:220-v*220}});hx.lineCap='round';hx.lineWidth=radius*2;for(let i=1;i<items.length;i++){const a=items[i-1],b=items[i],north=(b.latitude-a.latitude)*111319.5,east=(b.longitude-a.longitude)*111319.5*Math.cos((a.latitude+b.latitude)*Math.PI/360);if(Math.hypot(east,north)>maxLink)continue;const g=hx.createLinearGradient(a.p.x,a.p.y,b.p.x,b.p.y);g.addColorStop(0,`hsla(${a.hue},90%,54%,.72)`);g.addColorStop(1,`hsla(${b.hue},90%,54%,.72)`);hx.strokeStyle=g;hx.beginPath();hx.moveTo(a.p.x,a.p.y);hx.lineTo(b.p.x,b.p.y);hx.stroke()}items.forEach(q=>{hx.fillStyle=`hsla(${q.hue},90%,54%,.72)`;hx.beginPath();hx.arc(q.p.x,q.p.y,radius,0,Math.PI*2);hx.fill()});x.save();x.filter='blur(5px)';x.globalAlpha=.88;x.drawImage(heatLayer,0,0,w,h);x.restore()}
+  if(route.length){x.strokeStyle='#47a7ff';x.lineWidth=3;x.lineJoin='round';x.beginPath();route.forEach((p,i)=>i?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y));if(s.route.closed_loop)x.closePath();x.stroke();const step=Math.max(1,Math.ceil(route.length/28));route.forEach((p,i)=>{if(i%step)return;x.fillStyle='#30d5c8';x.beginPath();x.arc(p.x,p.y,2.5,0,Math.PI*2);x.fill()});const start=route[0];x.save();x.translate(start.x,start.y);x.rotate(Math.PI/4);x.fillStyle='#5ee38d';x.fillRect(-6,-6,12,12);x.restore();x.fillStyle='#d8e7ef';x.font='bold 11px system-ui';x.fillText(s.route.closed_loop?'LOOP START':'START',start.x+11,start.y-9);if(!s.route.closed_loop&&route.length>1){const end=route[route.length-1];x.fillStyle='#ff6070';x.beginPath();x.arc(end.x,end.y,6,0,Math.PI*2);x.fill();x.fillStyle='#d8e7ef';x.fillText('END',end.x+10,end.y-8)}}
+  const boat=xy.find(p=>p.boat);if(boat){const p=cv(boat),a=(t.heading_deg||0)*Math.PI/180;x.save();x.translate(p.x,p.y);x.rotate(a);x.fillStyle='#ffbf47';x.shadowColor='#ffbf47';x.shadowBlur=12;x.beginPath();x.moveTo(0,-16);x.lineTo(10,11);x.lineTo(0,7);x.lineTo(-10,11);x.closePath();x.fill();x.restore();x.fillStyle='#ffdf9a';x.font='bold 11px system-ui';x.fillText('BOAT',p.x+13,p.y+4)}else{x.fillStyle='#89a1b3';x.font='12px system-ui';x.fillText('GPS fix 대기 중 — 현재 보트 위치 미표시',16,h-18)}}
+function drawDeadband(s){const c=$('cameraOverlay'),box=c.parentElement,dpr=devicePixelRatio||1,w=box.clientWidth,h=box.clientHeight;c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);if(!$('deadbandToggle').checked)return;const img=$('cameraImage'),iw=img.naturalWidth||((s.target||{}).image_width),ih=img.naturalHeight||((s.target||{}).image_height);if(!iw||!ih)return;const scale=Math.min(w/iw,h/ih),rw=iw*scale,rh=ih*scale,left=(w-rw)/2,top=(h-rh)/2,tar=s.target||{},cfg=s.display||{};if(!Number.isFinite(cfg.deadband_min)||!Number.isFinite(cfg.deadband_max)||!Number.isFinite(cfg.deadband_bbox_gain)){x.fillStyle='#ffbf47';x.font='bold 11px system-ui';x.fillText('DEADBAND: CONTROLLER WAIT',left+12,top+20);return}const ratio=Number.isFinite(tar.bbox_width)&&tar.image_width>0?tar.bbox_width/tar.image_width:0,base=Math.max(cfg.deadband_min,Math.min(cfg.deadband_max,cfg.deadband_min+cfg.deadband_bbox_gain*ratio)),bottom=Number.isFinite(tar.center_y)&&Number.isFinite(tar.bbox_height)&&tar.image_height>0?(tar.center_y+tar.bbox_height/2)/tar.image_height:0,start=Number.isFinite(cfg.bottom_deadband_start_ratio)?cfg.bottom_deadband_start_ratio:1,bottomMax=Number.isFinite(cfg.bottom_deadband_max)?cfg.bottom_deadband_max:base,progress=Math.max(0,Math.min(1,(bottom-start)/Math.max(1-start,1e-6))),db=base+progress*(bottomMax-base),half=db*rw/2;x.fillStyle='rgba(48,213,200,.09)';x.fillRect(left+rw/2-half,top,half*2,rh);x.strokeStyle='#30d5c8';x.lineWidth=2;x.setLineDash([8,6]);[left+rw/2-half,left+rw/2+half].forEach(px=>{x.beginPath();x.moveTo(px,top);x.lineTo(px,top+rh);x.stroke()});x.setLineDash([]);x.fillStyle='#30d5c8';x.font='bold 11px system-ui';x.fillText(`DEADBAND ±${(db*100).toFixed(1)}%`,left+rw/2-half+5,top+18)}
+setInterval(refresh,250);setInterval(refreshHeatmap,1000);setInterval(updateConnection,500);addEventListener('resize',()=>{if(state){drawDeadband(state);drawMap(state)}});refresh();refreshHeatmap();
+async function recordAction(action){$('recordMessage').textContent='처리 중…';try{const r=await fetch(`/api/recording/${action}`,{method:'POST'}),v=await r.json();$('recordMessage').textContent=v.message||'완료';if(!v.success)alert(v.message||'기록 요청 실패');await refresh()}catch(e){$('recordMessage').textContent='요청 실패'}}
+$('rawCapture').onclick=()=>recordAction('raw_capture');$('rawStart').onclick=()=>recordAction('raw_start');$('rawStop').onclick=()=>recordAction('raw_stop');
+$('debugStart').onclick=()=>recordAction('debug_start');$('debugStop').onclick=()=>recordAction('debug_stop');$('logStart').onclick=()=>recordAction('log_start');$('logStop').onclick=()=>recordAction('log_stop');
+function setHeatMode(mode){heatMode=mode;['heatOff','heatPh','heatDo','heatTurbidity'].forEach(id=>$(id).classList.remove('active'));$(mode==='ph'?'heatPh':mode==='do'?'heatDo':mode==='turbidity'?'heatTurbidity':'heatOff').classList.add('active');const legend=$('heatLegend');legend.hidden=mode==='off';if(mode!=='off'){const range=(heatmap.ranges||{})[mode]||[];$('heatLabel').textContent=mode==='ph'?'pH HEATMAP':mode==='do'?'DO HEATMAP (mg/L)':'TURBIDITY HEATMAP (NTU)';$('heatMin').textContent=fmt(range[0],1);$('heatMax').textContent=fmt(range[1],1)}if(state)drawMap(state)}
+$('heatOff').onclick=()=>setHeatMode('off');$('heatPh').onclick=()=>setHeatMode('ph');$('heatDo').onclick=()=>setHeatMode('do');$('heatTurbidity').onclick=()=>setHeatMode('turbidity');
+$('deadbandToggle').checked=localStorage.getItem('showDeadband')==='1';$('deadbandToggle').onchange=e=>{localStorage.setItem('showDeadband',e.target.checked?'1':'0');if(state)drawDeadband(state)};$('cameraImage').onload=()=>state&&drawDeadband(state);
+function setZoom(next,anchorX=$('map').clientWidth/2,anchorY=$('map').clientHeight/2){const old=mapView.zoom,nextZoom=Math.max(.5,Math.min(20,next));mapView.offsetX=anchorX-$('map').clientWidth/2-(anchorX-$('map').clientWidth/2-mapView.offsetX)*nextZoom/old;mapView.offsetY=anchorY-$('map').clientHeight/2-(anchorY-$('map').clientHeight/2-mapView.offsetY)*nextZoom/old;mapView.zoom=nextZoom;if(state)drawMap(state)}
+$('zoomIn').onclick=()=>setZoom(mapView.zoom*1.35);$('zoomOut').onclick=()=>setZoom(mapView.zoom/1.35);$('fitMap').onclick=()=>{mapView={zoom:1,offsetX:0,offsetY:0};if(state)drawMap(state)};
+$('map').addEventListener('wheel',e=>{e.preventDefault();const r=e.currentTarget.getBoundingClientRect();setZoom(mapView.zoom*(e.deltaY<0?1.18:1/1.18),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+$('map').addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,ox:mapView.offsetX,oy:mapView.offsetY};e.currentTarget.setPointerCapture(e.pointerId);e.currentTarget.classList.add('dragging')});
+$('map').addEventListener('pointermove',e=>{if(!drag)return;mapView.offsetX=drag.ox+e.clientX-drag.x;mapView.offsetY=drag.oy+e.clientY-drag.y;if(state)drawMap(state)});
+$('map').addEventListener('pointerup',e=>{drag=null;e.currentTarget.classList.remove('dragging')});
+</script>
+</body></html>

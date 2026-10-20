@@ -1,0 +1,62 @@
+los_controller:
+  ros__parameters:
+    # ================================================================
+    # FIELD TUNING: LOS 주행 중 우선 조정할 값
+    # ================================================================
+
+    # 추종할 WGS84 경로. 현장/주행 코스를 바꿀 때 가장 먼저 확인한다.
+    path_file: /home/rodin/boat_ws/src/boat_autonomy/config/recorded_route_20260828_091510.yaml
+
+    # LOS 유도 거리(m). 크게 하면 완만하지만 코너를 크게 돌고,
+    # 작게 하면 경로를 촘촘히 따라가지만 조향이 민감해진다.
+    lookahead: 8.0
+    waypoint_radius: 1.5  # waypoint 도착 판정 반경(m)
+
+    # Heading PD. 지그재그하면 kp를 낮추거나 kd를 조금씩 높인다.
+    # kd=0이면 현재처럼 P 제어만 사용한다.
+    heading_kp: 0.4
+    heading_kd: 0.1
+    max_rudder_deg: 15.0
+    max_rudder_rate_deg_s: 30.0
+
+    # Heading/yaw-rate 필터. 작을수록 부드럽고 반응은 느려진다.
+    heading_filter_alpha: 0.3
+    yaw_rate_filter_alpha: 0.25
+
+    # 목표 주행 속도(m/s)와 속도 PI 게인.
+    cruise_speed: 0.4
+    speed_kp: 5.0
+    speed_ki: 1.0
+    speed_integral_limit: 5.0
+    speed_filter_alpha: 0.3
+
+    # 회전 시 출력 감소 강도. 값이 클수록 코너에서 더 많이 감속한다.
+    turn_speed_reduction: 0.8
+    # STM은 출력 0에서 조향하지 않으므로 조향각에 비례해 최소 출력 보장.
+    # 최대 조향에서 이 값, 절반 조향에서 이 값의 절반이 최소 출력이다.
+    minimum_turn_output: 1.0
+    max_output: 6.0
+
+    # ================================================================
+    # ADVANCED / SYSTEM: GPS 품질·경로 시작 방식·토픽 설정
+    # ================================================================
+
+    # 비정상 GPS 점프 및 정지 판정 설정.
+    max_valid_gps_speed: 8.0     # 이 속도(m/s) 초과 위치 점프는 무시
+    gps_min_displacement: 0.10   # 속도 계산에 필요한 최소 이동거리(m)
+    gps_stationary_timeout: 2.0  # 이 시간(s) 이동이 없으면 정지로 판단
+    gps_median_window: 3         # GPS 속도 median filter 표본 수
+
+    # 시작 위치에서 가장 가까운 경로 segment로 합류할지 여부.
+    join_nearest_segment: true
+    start_waypoint_index: 0
+    # Closed route: 0은 무한 반복, 양수 N은 N바퀴 후 정지.
+    max_laps: 1
+
+    telemetry_topic: /boat/telemetry
+    mode_topic: /autonomy/mode
+    # LOS 단독 실행 시 STM bridge로 직접 보낼 기본 출력.
+    # 통합 trash_autonomy.launch.py에서는 /autonomy/global_cmd로 override.
+    command_topic: /boat/cmd
+    target_speed_topic: /autonomy/target_speed
+    cross_track_error_topic: /autonomy/cross_track_error

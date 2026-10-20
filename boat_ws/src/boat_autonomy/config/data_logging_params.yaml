@@ -1,0 +1,52 @@
+# GPS 기록 및 추후 LOS 경로 생성
+gps_logger:
+  ros__parameters:
+    # FIELD TUNING
+    log_interval: 1.0          # GPS CSV 기록 간격(s)
+    require_gps_fix: true      # false면 fix가 없어도 수신값 기록
+    route_yaml_enabled: true   # 기록 종료 시 LOS용 route YAML 생성
+    route_min_distance: 0.5    # route waypoint 최소 간격(m)
+    route_closed_loop: false
+
+    # ADVANCED / SYSTEM
+    telemetry_topic: /boat/telemetry
+    output_directory: /home/rodin/boat_data/gps
+
+
+# /camera/image_raw 원본 사진·영상 저장
+camera_recorder:
+  ros__parameters:
+    # FIELD TUNING
+    fps: 30.0            # 저장 영상 FPS; camera publisher FPS와 맞춘다.
+    jpeg_quality: 95     # 사진 품질 1-100
+    video_codec: mp4v    # OpenCV fourcc 4글자
+
+    # 입력 프레임 도착 전 writer 크기 기본값. 첫 프레임에서 실제 크기로 갱신.
+    width: 1280
+    height: 720
+
+    # ADVANCED / SYSTEM
+    image_topic: /camera/image_raw
+    output_directory: /home/rodin/boat_data/camera
+
+
+# 대시보드에서 제어하는 탐지 영상 및 통합 telemetry/CMD 기록
+mission_recorder:
+  ros__parameters:
+    # FIELD TUNING: 기록 부하가 크면 debug_video_fps를 낮춘다.
+    debug_video_fps: 10.0
+    debug_video_codec: mp4v
+    log_interval: 0.10
+    log_flush_interval: 1.0
+
+    # ADVANCED / SYSTEM
+    debug_image_topic: /trash/debug_image
+    telemetry_topic: /boat/telemetry
+    telemetry_age_topic: /boat/telemetry_age
+    command_topic: /boat/cmd
+    global_command_topic: /autonomy/global_cmd
+    mode_topic: /autonomy/mode
+    target_topic: /trash/target
+    target_state_topic: /trash/target_state
+    system_event_topic: /autonomy/system_event
+    output_directory: /home/rodin/boat_data/mission_records

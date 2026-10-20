@@ -1,0 +1,33 @@
+name: "Recorded GPS route 2026-08-28 01:49:05"
+coordinate_frame: "WGS84"
+latitude_longitude_order: "lat, lon"
+closed_loop: false
+spacing_m_approx: 2.0
+processing: "ENU RDP simplification (1.25 m tolerance), then 2 m resampling"
+source: "/home/rodin/boat_data/gps/gps_20260828_014905.csv"
+survey_grade: false
+warning: "Recorded GNSS route. Verify the path and surroundings before autonomous operation."
+waypoints:
+  - {id: 0, latitude: 37.4480133, longitude: 126.6535187}
+  - {id: 1, latitude: 37.4480278, longitude: 126.6535279}
+  - {id: 2, latitude: 37.4480423, longitude: 126.6535370}
+  - {id: 3, latitude: 37.4480568, longitude: 126.6535462}
+  - {id: 4, latitude: 37.4480713, longitude: 126.6535553}
+  - {id: 5, latitude: 37.4480858, longitude: 126.6535645}
+  - {id: 6, latitude: 37.4481003, longitude: 126.6535736}
+  - {id: 7, latitude: 37.4481148, longitude: 126.6535827}
+  - {id: 8, latitude: 37.4481293, longitude: 126.6535919}
+  - {id: 9, latitude: 37.4481438, longitude: 126.6536011}
+  - {id: 10, latitude: 37.4481583, longitude: 126.6536102}
+  - {id: 11, latitude: 37.4481717, longitude: 126.6536026}
+  - {id: 12, latitude: 37.4481850, longitude: 126.6535950}
+  - {id: 13, latitude: 37.4481799, longitude: 126.6535797}
+  - {id: 14, latitude: 37.4481748, longitude: 126.6535645}
+  - {id: 15, latitude: 37.4481697, longitude: 126.6535492}
+  - {id: 16, latitude: 37.4481539, longitude: 126.6535394}
+  - {id: 17, latitude: 37.4481381, longitude: 126.6535296}
+  - {id: 18, latitude: 37.4481223, longitude: 126.6535198}
+  - {id: 19, latitude: 37.4481065, longitude: 126.6535099}
+  - {id: 20, latitude: 37.4480907, longitude: 126.6535001}
+  - {id: 21, latitude: 37.4480749, longitude: 126.6534903}
+  - {id: 22, latitude: 37.4480591, longitude: 126.6534805}

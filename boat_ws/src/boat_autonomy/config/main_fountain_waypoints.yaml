@@ -1,0 +1,1171 @@
+name: "Inha University main-building fountain conservative loop"
+map_background: "main-fountain-map.png"
+map_bounds:
+  south: 37.4496663140
+  west: 126.6547313598
+  north: 37.4504969829
+  east: 126.6553885113
+coordinate_frame: "WGS84"
+latitude_longitude_order: "lat, lon"
+closed_loop: true
+spacing_m_approx: 0.50
+inward_margin_m_approx: 1.50
+source: "user-provided map screenshot, georeferenced with public WGS84 map anchors"
+survey_grade: false
+warning: "The fountain is narrow relative to ordinary GNSS error. Use at very low speed and verify the route on site before autonomous operation."
+waypoints:
+  - id: 000
+    latitude: 37.44972508
+    longitude: 126.65485567
+  - id: 001
+    latitude: 37.44972913
+    longitude: 126.65485807
+  - id: 002
+    latitude: 37.44973318
+    longitude: 126.65486043
+  - id: 003
+    latitude: 37.44973727
+    longitude: 126.65486271
+  - id: 004
+    latitude: 37.44974156
+    longitude: 126.65486421
+  - id: 005
+    latitude: 37.44974562
+    longitude: 126.65486656
+  - id: 006
+    latitude: 37.44974971
+    longitude: 126.65486883
+  - id: 007
+    latitude: 37.44975379
+    longitude: 126.65487110
+  - id: 008
+    latitude: 37.44975792
+    longitude: 126.65487324
+  - id: 009
+    latitude: 37.44976214
+    longitude: 126.65487496
+  - id: 010
+    latitude: 37.44976622
+    longitude: 126.65487725
+  - id: 011
+    latitude: 37.44977024
+    longitude: 126.65487968
+  - id: 012
+    latitude: 37.44977448
+    longitude: 126.65488145
+  - id: 013
+    latitude: 37.44977864
+    longitude: 126.65488340
+  - id: 014
+    latitude: 37.44978267
+    longitude: 126.65488582
+  - id: 015
+    latitude: 37.44978673
+    longitude: 126.65488817
+  - id: 016
+    latitude: 37.44979081
+    longitude: 126.65489047
+  - id: 017
+    latitude: 37.44979510
+    longitude: 126.65489195
+  - id: 018
+    latitude: 37.44979916
+    longitude: 126.65489431
+  - id: 019
+    latitude: 37.44980325
+    longitude: 126.65489660
+  - id: 020
+    latitude: 37.44980734
+    longitude: 126.65489886
+  - id: 021
+    latitude: 37.44981145
+    longitude: 126.65490103
+  - id: 022
+    latitude: 37.44981568
+    longitude: 126.65490272
+  - id: 023
+    latitude: 37.44981977
+    longitude: 126.65490497
+  - id: 024
+    latitude: 37.44982380
+    longitude: 126.65490742
+  - id: 025
+    latitude: 37.44982785
+    longitude: 126.65490978
+  - id: 026
+    latitude: 37.44983214
+    longitude: 126.65491134
+  - id: 027
+    latitude: 37.44983622
+    longitude: 126.65491356
+  - id: 028
+    latitude: 37.44984028
+    longitude: 126.65491592
+  - id: 029
+    latitude: 37.44984435
+    longitude: 126.65491824
+  - id: 030
+    latitude: 37.44984844
+    longitude: 126.65492051
+  - id: 031
+    latitude: 37.44985271
+    longitude: 126.65492206
+  - id: 032
+    latitude: 37.44985679
+    longitude: 126.65492437
+  - id: 033
+    latitude: 37.44986088
+    longitude: 126.65492663
+  - id: 034
+    latitude: 37.44986499
+    longitude: 126.65492882
+  - id: 035
+    latitude: 37.44986922
+    longitude: 126.65493049
+  - id: 036
+    latitude: 37.44987331
+    longitude: 126.65493276
+  - id: 037
+    latitude: 37.44987735
+    longitude: 126.65493514
+  - id: 038
+    latitude: 37.44988140
+    longitude: 126.65493753
+  - id: 039
+    latitude: 37.44988567
+    longitude: 126.65493915
+  - id: 040
+    latitude: 37.44988978
+    longitude: 126.65494129
+  - id: 041
+    latitude: 37.44989383
+    longitude: 126.65494367
+  - id: 042
+    latitude: 37.44989790
+    longitude: 126.65494601
+  - id: 043
+    latitude: 37.44990199
+    longitude: 126.65494828
+  - id: 044
+    latitude: 37.44990626
+    longitude: 126.65494980
+  - id: 045
+    latitude: 37.44991033
+    longitude: 126.65495213
+  - id: 046
+    latitude: 37.44991442
+    longitude: 126.65495440
+  - id: 047
+    latitude: 37.44991849
+    longitude: 126.65495672
+  - id: 048
+    latitude: 37.44992264
+    longitude: 126.65495879
+  - id: 049
+    latitude: 37.44992685
+    longitude: 126.65496053
+  - id: 050
+    latitude: 37.44993091
+    longitude: 126.65496287
+  - id: 051
+    latitude: 37.44993495
+    longitude: 126.65496527
+  - id: 052
+    latitude: 37.44993901
+    longitude: 126.65496763
+  - id: 053
+    latitude: 37.44994334
+    longitude: 126.65496902
+  - id: 054
+    latitude: 37.44994738
+    longitude: 126.65497141
+  - id: 055
+    latitude: 37.44995144
+    longitude: 126.65497377
+  - id: 056
+    latitude: 37.44995553
+    longitude: 126.65497604
+  - id: 057
+    latitude: 37.44995981
+    longitude: 126.65497755
+  - id: 058
+    latitude: 37.44996387
+    longitude: 126.65497990
+  - id: 059
+    latitude: 37.44996796
+    longitude: 126.65498217
+  - id: 060
+    latitude: 37.44997205
+    longitude: 126.65498444
+  - id: 061
+    latitude: 37.44997617
+    longitude: 126.65498658
+  - id: 062
+    latitude: 37.44998040
+    longitude: 126.65498829
+  - id: 063
+    latitude: 37.44998447
+    longitude: 126.65499059
+  - id: 064
+    latitude: 37.44998850
+    longitude: 126.65499302
+  - id: 065
+    latitude: 37.44999274
+    longitude: 126.65499478
+  - id: 066
+    latitude: 37.44999690
+    longitude: 126.65499674
+  - id: 067
+    latitude: 37.45000093
+    longitude: 126.65499916
+  - id: 068
+    latitude: 37.45000499
+    longitude: 126.65500151
+  - id: 069
+    latitude: 37.45000907
+    longitude: 126.65500381
+  - id: 070
+    latitude: 37.45001336
+    longitude: 126.65500529
+  - id: 071
+    latitude: 37.45001742
+    longitude: 126.65500765
+  - id: 072
+    latitude: 37.45002150
+    longitude: 126.65500994
+  - id: 073
+    latitude: 37.45002560
+    longitude: 126.65501219
+  - id: 074
+    latitude: 37.45002985
+    longitude: 126.65501379
+  - id: 075
+    latitude: 37.45003394
+    longitude: 126.65501606
+  - id: 076
+    latitude: 37.45003803
+    longitude: 126.65501832
+  - id: 077
+    latitude: 37.45004205
+    longitude: 126.65502076
+  - id: 078
+    latitude: 37.45004627
+    longitude: 126.65502259
+  - id: 079
+    latitude: 37.45005045
+    longitude: 126.65502446
+  - id: 080
+    latitude: 37.45005448
+    longitude: 126.65502690
+  - id: 081
+    latitude: 37.45005854
+    longitude: 126.65502926
+  - id: 082
+    latitude: 37.45006284
+    longitude: 126.65503077
+  - id: 083
+    latitude: 37.45006691
+    longitude: 126.65503304
+  - id: 084
+    latitude: 37.45007097
+    longitude: 126.65503540
+  - id: 085
+    latitude: 37.45007505
+    longitude: 126.65503770
+  - id: 086
+    latitude: 37.45007934
+    longitude: 126.65503917
+  - id: 087
+    latitude: 37.45008340
+    longitude: 126.65504153
+  - id: 088
+    latitude: 37.45008748
+    longitude: 126.65504383
+  - id: 089
+    latitude: 37.45009157
+    longitude: 126.65504609
+  - id: 090
+    latitude: 37.45009568
+    longitude: 126.65504827
+  - id: 091
+    latitude: 37.45009991
+    longitude: 126.65504995
+  - id: 092
+    latitude: 37.45010401
+    longitude: 126.65505221
+  - id: 093
+    latitude: 37.45010803
+    longitude: 126.65505463
+  - id: 094
+    latitude: 37.45011224
+    longitude: 126.65505651
+  - id: 095
+    latitude: 37.45011644
+    longitude: 126.65505833
+  - id: 096
+    latitude: 37.45012046
+    longitude: 126.65506078
+  - id: 097
+    latitude: 37.45012452
+    longitude: 126.65506314
+  - id: 098
+    latitude: 37.45012859
+    longitude: 126.65506547
+  - id: 099
+    latitude: 37.45013289
+    longitude: 126.65506692
+  - id: 100
+    latitude: 37.45013695
+    longitude: 126.65506928
+  - id: 101
+    latitude: 37.45014102
+    longitude: 126.65507160
+  - id: 102
+    latitude: 37.45014511
+    longitude: 126.65507386
+  - id: 103
+    latitude: 37.45014938
+    longitude: 126.65507541
+  - id: 104
+    latitude: 37.45015346
+    longitude: 126.65507772
+  - id: 105
+    latitude: 37.45015754
+    longitude: 126.65507999
+  - id: 106
+    latitude: 37.45016159
+    longitude: 126.65508236
+  - id: 107
+    latitude: 37.45016577
+    longitude: 126.65508432
+  - id: 108
+    latitude: 37.45016998
+    longitude: 126.65508611
+  - id: 109
+    latitude: 37.45017402
+    longitude: 126.65508850
+  - id: 110
+    latitude: 37.45017807
+    longitude: 126.65509089
+  - id: 111
+    latitude: 37.45018234
+    longitude: 126.65509250
+  - id: 112
+    latitude: 37.45018644
+    longitude: 126.65509465
+  - id: 113
+    latitude: 37.45019050
+    longitude: 126.65509702
+  - id: 114
+    latitude: 37.45019456
+    longitude: 126.65509936
+  - id: 115
+    latitude: 37.45019887
+    longitude: 126.65510080
+  - id: 116
+    latitude: 37.45020293
+    longitude: 126.65510316
+  - id: 117
+    latitude: 37.45020700
+    longitude: 126.65510549
+  - id: 118
+    latitude: 37.45021109
+    longitude: 126.65510776
+  - id: 119
+    latitude: 37.45021519
+    longitude: 126.65510996
+  - id: 120
+    latitude: 37.45021943
+    longitude: 126.65511161
+  - id: 121
+    latitude: 37.45022352
+    longitude: 126.65511388
+  - id: 122
+    latitude: 37.45022758
+    longitude: 126.65511623
+  - id: 123
+    latitude: 37.45023174
+    longitude: 126.65511824
+  - id: 124
+    latitude: 37.45023595
+    longitude: 126.65512000
+  - id: 125
+    latitude: 37.45024000
+    longitude: 126.65512237
+  - id: 126
+    latitude: 37.45024405
+    longitude: 126.65512477
+  - id: 127
+    latitude: 37.45024811
+    longitude: 126.65512713
+  - id: 128
+    latitude: 37.45025243
+    longitude: 126.65512852
+  - id: 129
+    latitude: 37.45025648
+    longitude: 126.65513090
+  - id: 130
+    latitude: 37.45026054
+    longitude: 126.65513325
+  - id: 131
+    latitude: 37.45026463
+    longitude: 126.65513552
+  - id: 132
+    latitude: 37.45026891
+    longitude: 126.65513704
+  - id: 133
+    latitude: 37.45027297
+    longitude: 126.65513938
+  - id: 134
+    latitude: 37.45027706
+    longitude: 126.65514165
+  - id: 135
+    latitude: 37.45028114
+    longitude: 126.65514395
+  - id: 136
+    latitude: 37.45028528
+    longitude: 126.65514604
+  - id: 137
+    latitude: 37.45028950
+    longitude: 126.65514777
+  - id: 138
+    latitude: 37.45029356
+    longitude: 126.65515010
+  - id: 139
+    latitude: 37.45029760
+    longitude: 126.65515251
+  - id: 140
+    latitude: 37.45030184
+    longitude: 126.65515423
+  - id: 141
+    latitude: 37.45030599
+    longitude: 126.65515624
+  - id: 142
+    latitude: 37.45031003
+    longitude: 126.65515865
+  - id: 143
+    latitude: 37.45031409
+    longitude: 126.65516101
+  - id: 144
+    latitude: 37.45031817
+    longitude: 126.65516329
+  - id: 145
+    latitude: 37.45032246
+    longitude: 126.65516478
+  - id: 146
+    latitude: 37.45032652
+    longitude: 126.65516714
+  - id: 147
+    latitude: 37.45033060
+    longitude: 126.65516941
+  - id: 148
+    latitude: 37.45033470
+    longitude: 126.65517165
+  - id: 149
+    latitude: 37.45033895
+    longitude: 126.65517327
+  - id: 150
+    latitude: 37.45034304
+    longitude: 126.65517554
+  - id: 151
+    latitude: 37.45034712
+    longitude: 126.65517782
+  - id: 152
+    latitude: 37.45035125
+    longitude: 126.65517994
+  - id: 153
+    latitude: 37.45035547
+    longitude: 126.65518166
+  - id: 154
+    latitude: 37.45035954
+    longitude: 126.65518397
+  - id: 155
+    latitude: 37.45036358
+    longitude: 126.65518639
+  - id: 156
+    latitude: 37.45036763
+    longitude: 126.65518875
+  - id: 157
+    latitude: 37.45037194
+    longitude: 126.65519021
+  - id: 158
+    latitude: 37.45037601
+    longitude: 126.65519253
+  - id: 159
+    latitude: 37.45038006
+    longitude: 126.65519489
+  - id: 160
+    latitude: 37.45038415
+    longitude: 126.65519718
+  - id: 161
+    latitude: 37.45038844
+    longitude: 126.65519866
+  - id: 162
+    latitude: 37.45039249
+    longitude: 126.65520102
+  - id: 163
+    latitude: 37.45039658
+    longitude: 126.65520331
+  - id: 164
+    latitude: 37.45040067
+    longitude: 126.65520556
+  - id: 165
+    latitude: 37.45040479
+    longitude: 126.65520773
+  - id: 166
+    latitude: 37.45040901
+    longitude: 126.65520943
+  - id: 167
+    latitude: 37.45041310
+    longitude: 126.65521169
+  - id: 168
+    latitude: 37.45041712
+    longitude: 126.65521414
+  - id: 169
+    latitude: 37.45042135
+    longitude: 126.65521596
+  - id: 170
+    latitude: 37.45042553
+    longitude: 126.65521784
+  - id: 171
+    latitude: 37.45042955
+    longitude: 126.65522027
+  - id: 172
+    latitude: 37.45043361
+    longitude: 126.65522263
+  - id: 173
+    latitude: 37.45043769
+    longitude: 126.65522495
+  - id: 174
+    latitude: 37.45044198
+    longitude: 126.65522641
+  - id: 175
+    latitude: 37.45044604
+    longitude: 126.65522877
+  - id: 176
+    latitude: 37.45045012
+    longitude: 126.65523107
+  - id: 177
+    latitude: 37.45045421
+    longitude: 126.65523334
+  - id: 178
+    latitude: 37.45045847
+    longitude: 126.65523490
+  - id: 179
+    latitude: 37.45046256
+    longitude: 126.65523720
+  - id: 180
+    latitude: 37.45046665
+    longitude: 126.65523946
+  - id: 181
+    latitude: 37.45047076
+    longitude: 126.65524163
+  - id: 182
+    latitude: 37.45047499
+    longitude: 126.65524332
+  - id: 183
+    latitude: 37.45047908
+    longitude: 126.65524557
+  - id: 184
+    latitude: 37.45048031
+    longitude: 126.65524933
+  - id: 185
+    latitude: 37.45047896
+    longitude: 126.65525468
+  - id: 186
+    latitude: 37.45047734
+    longitude: 126.65525989
+  - id: 187
+    latitude: 37.45047544
+    longitude: 126.65526498
+  - id: 188
+    latitude: 37.45047412
+    longitude: 126.65527035
+  - id: 189
+    latitude: 37.45047246
+    longitude: 126.65527554
+  - id: 190
+    latitude: 37.45047057
+    longitude: 126.65528064
+  - id: 191
+    latitude: 37.45046927
+    longitude: 126.65528602
+  - id: 192
+    latitude: 37.45046758
+    longitude: 126.65529120
+  - id: 193
+    latitude: 37.45046570
+    longitude: 126.65529630
+  - id: 194
+    latitude: 37.45046168
+    longitude: 126.65529410
+  - id: 195
+    latitude: 37.45045760
+    longitude: 126.65529181
+  - id: 196
+    latitude: 37.45045331
+    longitude: 126.65529032
+  - id: 197
+    latitude: 37.45044925
+    longitude: 126.65528796
+  - id: 198
+    latitude: 37.45044516
+    longitude: 126.65528568
+  - id: 199
+    latitude: 37.45044107
+    longitude: 126.65528343
+  - id: 200
+    latitude: 37.45043705
+    longitude: 126.65528099
+  - id: 201
+    latitude: 37.45043299
+    longitude: 126.65527862
+  - id: 202
+    latitude: 37.45042870
+    longitude: 126.65527707
+  - id: 203
+    latitude: 37.45042462
+    longitude: 126.65527485
+  - id: 204
+    latitude: 37.45042056
+    longitude: 126.65527249
+  - id: 205
+    latitude: 37.45041649
+    longitude: 126.65527016
+  - id: 206
+    latitude: 37.45041240
+    longitude: 126.65526790
+  - id: 207
+    latitude: 37.45040829
+    longitude: 126.65526570
+  - id: 208
+    latitude: 37.45040405
+    longitude: 126.65526404
+  - id: 209
+    latitude: 37.45039996
+    longitude: 126.65526177
+  - id: 210
+    latitude: 37.45039591
+    longitude: 126.65525941
+  - id: 211
+    latitude: 37.45039187
+    longitude: 126.65525701
+  - id: 212
+    latitude: 37.45038781
+    longitude: 126.65525465
+  - id: 213
+    latitude: 37.45038373
+    longitude: 126.65525238
+  - id: 214
+    latitude: 37.45037944
+    longitude: 126.65525088
+  - id: 215
+    latitude: 37.45037538
+    longitude: 126.65524852
+  - id: 216
+    latitude: 37.45037129
+    longitude: 126.65524625
+  - id: 217
+    latitude: 37.45036721
+    longitude: 126.65524398
+  - id: 218
+    latitude: 37.45036318
+    longitude: 126.65524154
+  - id: 219
+    latitude: 37.45035896
+    longitude: 126.65523974
+  - id: 220
+    latitude: 37.45035478
+    longitude: 126.65523783
+  - id: 221
+    latitude: 37.45035075
+    longitude: 126.65523540
+  - id: 222
+    latitude: 37.45034669
+    longitude: 126.65523304
+  - id: 223
+    latitude: 37.45034262
+    longitude: 126.65523073
+  - id: 224
+    latitude: 37.45033853
+    longitude: 126.65522847
+  - id: 225
+    latitude: 37.45033442
+    longitude: 126.65522628
+  - id: 226
+    latitude: 37.45033018
+    longitude: 126.65522461
+  - id: 227
+    latitude: 37.45032609
+    longitude: 126.65522234
+  - id: 228
+    latitude: 37.45032205
+    longitude: 126.65521996
+  - id: 229
+    latitude: 37.45031800
+    longitude: 126.65521757
+  - id: 230
+    latitude: 37.45031394
+    longitude: 126.65521521
+  - id: 231
+    latitude: 37.45030963
+    longitude: 126.65521381
+  - id: 232
+    latitude: 37.45030557
+    longitude: 126.65521144
+  - id: 233
+    latitude: 37.45030151
+    longitude: 126.65520909
+  - id: 234
+    latitude: 37.45029742
+    longitude: 126.65520682
+  - id: 235
+    latitude: 37.45029334
+    longitude: 126.65520453
+  - id: 236
+    latitude: 37.45028932
+    longitude: 126.65520210
+  - id: 237
+    latitude: 37.45028508
+    longitude: 126.65520033
+  - id: 238
+    latitude: 37.45028092
+    longitude: 126.65519838
+  - id: 239
+    latitude: 37.45027689
+    longitude: 126.65519596
+  - id: 240
+    latitude: 37.45027283
+    longitude: 126.65519360
+  - id: 241
+    latitude: 37.45026875
+    longitude: 126.65519130
+  - id: 242
+    latitude: 37.45026466
+    longitude: 126.65518903
+  - id: 243
+    latitude: 37.45026040
+    longitude: 126.65518747
+  - id: 244
+    latitude: 37.45025631
+    longitude: 126.65518518
+  - id: 245
+    latitude: 37.45025222
+    longitude: 126.65518292
+  - id: 246
+    latitude: 37.45024819
+    longitude: 126.65518050
+  - id: 247
+    latitude: 37.45024414
+    longitude: 126.65517813
+  - id: 248
+    latitude: 37.45024007
+    longitude: 126.65517578
+  - id: 249
+    latitude: 37.45023576
+    longitude: 126.65517436
+  - id: 250
+    latitude: 37.45023171
+    longitude: 126.65517199
+  - id: 251
+    latitude: 37.45022764
+    longitude: 126.65516966
+  - id: 252
+    latitude: 37.45022355
+    longitude: 126.65516739
+  - id: 253
+    latitude: 37.45021948
+    longitude: 126.65516507
+  - id: 254
+    latitude: 37.45021533
+    longitude: 126.65516301
+  - id: 255
+    latitude: 37.45021112
+    longitude: 126.65516127
+  - id: 256
+    latitude: 37.45020706
+    longitude: 126.65515893
+  - id: 257
+    latitude: 37.45020302
+    longitude: 126.65515652
+  - id: 258
+    latitude: 37.45019896
+    longitude: 126.65515416
+  - id: 259
+    latitude: 37.45019488
+    longitude: 126.65515187
+  - id: 260
+    latitude: 37.45019078
+    longitude: 126.65514961
+  - id: 261
+    latitude: 37.45018653
+    longitude: 126.65514803
+  - id: 262
+    latitude: 37.45018244
+    longitude: 126.65514575
+  - id: 263
+    latitude: 37.45017835
+    longitude: 126.65514350
+  - id: 264
+    latitude: 37.45017433
+    longitude: 126.65514105
+  - id: 265
+    latitude: 37.45017027
+    longitude: 126.65513869
+  - id: 266
+    latitude: 37.45016620
+    longitude: 126.65513635
+  - id: 267
+    latitude: 37.45016190
+    longitude: 126.65513491
+  - id: 268
+    latitude: 37.45015784
+    longitude: 126.65513255
+  - id: 269
+    latitude: 37.45015377
+    longitude: 126.65513023
+  - id: 270
+    latitude: 37.45014968
+    longitude: 126.65512796
+  - id: 271
+    latitude: 37.45014562
+    longitude: 126.65512562
+  - id: 272
+    latitude: 37.45014146
+    longitude: 126.65512360
+  - id: 273
+    latitude: 37.45013724
+    longitude: 126.65512184
+  - id: 274
+    latitude: 37.45013319
+    longitude: 126.65511948
+  - id: 275
+    latitude: 37.45012915
+    longitude: 126.65511708
+  - id: 276
+    latitude: 37.45012509
+    longitude: 126.65511472
+  - id: 277
+    latitude: 37.45012101
+    longitude: 126.65511244
+  - id: 278
+    latitude: 37.45011691
+    longitude: 126.65511020
+  - id: 279
+    latitude: 37.45011266
+    longitude: 126.65510859
+  - id: 280
+    latitude: 37.45010857
+    longitude: 126.65510632
+  - id: 281
+    latitude: 37.45010449
+    longitude: 126.65510405
+  - id: 282
+    latitude: 37.45010046
+    longitude: 126.65510160
+  - id: 283
+    latitude: 37.45009640
+    longitude: 126.65509925
+  - id: 284
+    latitude: 37.45009211
+    longitude: 126.65509773
+  - id: 285
+    latitude: 37.45008803
+    longitude: 126.65509547
+  - id: 286
+    latitude: 37.45008397
+    longitude: 126.65509311
+  - id: 287
+    latitude: 37.45007990
+    longitude: 126.65509080
+  - id: 288
+    latitude: 37.45007581
+    longitude: 126.65508853
+  - id: 289
+    latitude: 37.45007176
+    longitude: 126.65508617
+  - id: 290
+    latitude: 37.45006758
+    longitude: 126.65508419
+  - id: 291
+    latitude: 37.45006337
+    longitude: 126.65508241
+  - id: 292
+    latitude: 37.45005933
+    longitude: 126.65508002
+  - id: 293
+    latitude: 37.45005528
+    longitude: 126.65507764
+  - id: 294
+    latitude: 37.45005122
+    longitude: 126.65507528
+  - id: 295
+    latitude: 37.45004713
+    longitude: 126.65507301
+  - id: 296
+    latitude: 37.45004285
+    longitude: 126.65507150
+  - id: 297
+    latitude: 37.45003879
+    longitude: 126.65506916
+  - id: 298
+    latitude: 37.45003470
+    longitude: 126.65506689
+  - id: 299
+    latitude: 37.45003062
+    longitude: 126.65506459
+  - id: 300
+    latitude: 37.45002659
+    longitude: 126.65506216
+  - id: 301
+    latitude: 37.45002254
+    longitude: 126.65505980
+  - id: 302
+    latitude: 37.45001823
+    longitude: 126.65505832
+  - id: 303
+    latitude: 37.45001416
+    longitude: 126.65505603
+  - id: 304
+    latitude: 37.45001011
+    longitude: 126.65505367
+  - id: 305
+    latitude: 37.45000603
+    longitude: 126.65505137
+  - id: 306
+    latitude: 37.45000194
+    longitude: 126.65504910
+  - id: 307
+    latitude: 37.44999782
+    longitude: 126.65504692
+  - id: 308
+    latitude: 37.44999359
+    longitude: 126.65504524
+  - id: 309
+    latitude: 37.44998950
+    longitude: 126.65504299
+  - id: 310
+    latitude: 37.44998547
+    longitude: 126.65504057
+  - id: 311
+    latitude: 37.44998142
+    longitude: 126.65503819
+  - id: 312
+    latitude: 37.44997735
+    longitude: 126.65503585
+  - id: 313
+    latitude: 37.44997326
+    longitude: 126.65503358
+  - id: 314
+    latitude: 37.44996899
+    longitude: 126.65503206
+  - id: 315
+    latitude: 37.44996492
+    longitude: 126.65502972
+  - id: 316
+    latitude: 37.44996083
+    longitude: 126.65502746
+  - id: 317
+    latitude: 37.44995676
+    longitude: 126.65502514
+  - id: 318
+    latitude: 37.44995273
+    longitude: 126.65502272
+  - id: 319
+    latitude: 37.44994848
+    longitude: 126.65502099
+  - id: 320
+    latitude: 37.44994434
+    longitude: 126.65501899
+  - id: 321
+    latitude: 37.44994030
+    longitude: 126.65501659
+  - id: 322
+    latitude: 37.44993624
+    longitude: 126.65501423
+  - id: 323
+    latitude: 37.44993216
+    longitude: 126.65501194
+  - id: 324
+    latitude: 37.44992806
+    longitude: 126.65500968
+  - id: 325
+    latitude: 37.44992395
+    longitude: 126.65500750
+  - id: 326
+    latitude: 37.44991972
+    longitude: 126.65500581
+  - id: 327
+    latitude: 37.44991563
+    longitude: 126.65500356
+  - id: 328
+    latitude: 37.44991161
+    longitude: 126.65500112
+  - id: 329
+    latitude: 37.44990755
+    longitude: 126.65499875
+  - id: 330
+    latitude: 37.44990348
+    longitude: 126.65499642
+  - id: 331
+    latitude: 37.44989939
+    longitude: 126.65499415
+  - id: 332
+    latitude: 37.44989512
+    longitude: 126.65499262
+  - id: 333
+    latitude: 37.44989105
+    longitude: 126.65499029
+  - id: 334
+    latitude: 37.44988696
+    longitude: 126.65498803
+  - id: 335
+    latitude: 37.44988290
+    longitude: 126.65498569
+  - id: 336
+    latitude: 37.44987886
+    longitude: 126.65498328
+  - id: 337
+    latitude: 37.44987480
+    longitude: 126.65498092
+  - id: 338
+    latitude: 37.44987072
+    longitude: 126.65497863
+  - id: 339
+    latitude: 37.44986643
+    longitude: 126.65497714
+  - id: 340
+    latitude: 37.44986237
+    longitude: 126.65497478
+  - id: 341
+    latitude: 37.44985829
+    longitude: 126.65497251
+  - id: 342
+    latitude: 37.44985419
+    longitude: 126.65497026
+  - id: 343
+    latitude: 37.44985017
+    longitude: 126.65496781
+  - id: 344
+    latitude: 37.44984611
+    longitude: 126.65496545
+  - id: 345
+    latitude: 37.44984183
+    longitude: 126.65496389
+  - id: 346
+    latitude: 37.44983774
+    longitude: 126.65496167
+  - id: 347
+    latitude: 37.44983368
+    longitude: 126.65495931
+  - id: 348
+    latitude: 37.44982961
+    longitude: 126.65495699
+  - id: 349
+    latitude: 37.44982552
+    longitude: 126.65495472
+  - id: 350
+    latitude: 37.44982146
+    longitude: 126.65495238
+  - id: 351
+    latitude: 37.44981742
+    longitude: 126.65494997
+  - id: 352
+    latitude: 37.44981317
+    longitude: 126.65494827
+  - id: 353
+    latitude: 37.44980904
+    longitude: 126.65494624
+  - id: 354
+    latitude: 37.44980499
+    longitude: 126.65494384
+  - id: 355
+    latitude: 37.44980093
+    longitude: 126.65494148
+  - id: 356
+    latitude: 37.44979685
+    longitude: 126.65493920
+  - id: 357
+    latitude: 37.44979275
+    longitude: 126.65493695
+  - id: 358
+    latitude: 37.44978873
+    longitude: 126.65493451
+  - id: 359
+    latitude: 37.44978452
+    longitude: 126.65493266
+  - id: 360
+    latitude: 37.44978033
+    longitude: 126.65493081
+  - id: 361
+    latitude: 37.44977630
+    longitude: 126.65492836
+  - id: 362
+    latitude: 37.44977225
+    longitude: 126.65492601
+  - id: 363
+    latitude: 37.44976818
+    longitude: 126.65492368
+  - id: 364
+    latitude: 37.44976409
+    longitude: 126.65492141
+  - id: 365
+    latitude: 37.44975998
+    longitude: 126.65491921
+  - id: 366
+    latitude: 37.44975574
+    longitude: 126.65491756
+  - id: 367
+    latitude: 37.44975165
+    longitude: 126.65491529
+  - id: 368
+    latitude: 37.44974760
+    longitude: 126.65491293
+  - id: 369
+    latitude: 37.44974356
+    longitude: 126.65491053
+  - id: 370
+    latitude: 37.44973950
+    longitude: 126.65490817
+  - id: 371
+    latitude: 37.44973541
+    longitude: 126.65490589
+  - id: 372
+    latitude: 37.44973132
+    longitude: 126.65490365
+  - id: 373
+    latitude: 37.44972707
+    longitude: 126.65490204
+  - id: 374
+    latitude: 37.44972298
+    longitude: 126.65489977
+  - id: 375
+    latitude: 37.44971889
+    longitude: 126.65489750
+  - id: 376
+    latitude: 37.44971487
+    longitude: 126.65489506
+  - id: 377
+    latitude: 37.44971276
+    longitude: 126.65489179
+  - id: 378
+    latitude: 37.44971466
+    longitude: 126.65488670
+  - id: 379
+    latitude: 37.44971655
+    longitude: 126.65488160
+  - id: 380
+    latitude: 37.44971842
+    longitude: 126.65487649
+  - id: 381
+    latitude: 37.44971954
+    longitude: 126.65487105
+  - id: 382
+    latitude: 37.44972142
+    longitude: 126.65486594
+  - id: 383
+    latitude: 37.44972328
+    longitude: 126.65486083
+  - id: 384
+    latitude: 37.44972508
+    longitude: 126.65485567

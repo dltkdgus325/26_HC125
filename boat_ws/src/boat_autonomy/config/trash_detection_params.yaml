@@ -1,0 +1,202 @@
+# ============================================================================
+# STM32 ↔ Jetson 통신
+# 프로토콜($TEL / $CMD)은 코드에 고정되어 있으며 여기서는 장치/주기만 조정.
+# ============================================================================
+boat_uart_node:
+  ros__parameters:
+    port: /dev/ttyTHS1
+    baudrate: 115200
+    loop_rate: 20.0
+    command_timeout: 0.5
+    telemetry_timeout: 0.5
+    csv_path: ""  # 비우면 bridge 자체 CSV 저장 비활성화
+
+
+# ============================================================================
+# USB 카메라: /dev/video0을 여는 유일한 노드
+# ============================================================================
+camera_publisher_node:
+  ros__parameters:
+    # FIELD TUNING: 카메라가 지원하는 해상도/FPS에 맞춘다.
+    device: /dev/video0
+    width: 1280
+    height: 720
+    fps: 30.0
+
+    # ADVANCED / SYSTEM
+    image_topic: /camera/image_raw
+    frame_id: camera
+
+
+# ============================================================================
+# 쓰레기 탐지 + temporal filtering
+# ============================================================================
+trash_detection_node:
+  ros__parameters:
+    # ================================================================
+    # FIELD TUNING: 오탐/미탐을 보며 우선 조정할 값
+    # ================================================================
+
+    # YOLO가 내보내는 최소 confidence. keep_conf보다 높이면 안 된다.
+    detection_conf: 0.30
+    # 신규 target은 엄격하게, 이미 잠긴 target은 낮은 confidence까지 유지.
+    target_entry_conf: 0.30
+    target_keep_conf: 0.30
+
+    # 최근 confirm_window 프레임 중 confirm_count회 같은 target이면 LOCK.
+    confirm_window: 5
+    confirm_count: 3
+    # 잠깐 놓쳐도 이 시간(s) 동안 마지막 확정 target을 유지.
+    target_lost_timeout: 0.50
+    # track ID가 없거나 재할당될 때 허용하는 정규화 중심 이동거리.
+    max_target_jump_ratio: 0.20
+
+    # ================================================================
+    # MODEL / INFERENCE: 모델이나 GPU 구성이 바뀔 때 조정
+    # ================================================================
+    model: /home/rodin/boat_data/best.pt
+    device: "0"             # Orin CUDA device 0; CPU fallback 사용 안 함
+    imgsz: 640
+    target_classes: ""       # 비우면 모든 모델 클래스(현재 trash 1개)
+    use_tracking: true
+    frame_stride: 1          # 1은 모든 프레임 추론
+
+    # HARD NEGATIVE: 재학습 후보 저장. 평상시 false 권장.
+    save_hard_negatives: false
+    hard_negative_dir: /home/rodin/boat_data/hard_negatives
+    hard_negative_save_interval: 1.0
+
+    # ADVANCED / SYSTEM: ROS 토픽 및 화면 디버그
+    image_topic: /camera/image_raw
+    target_topic: /trash/target
+    target_state_topic: /trash/target_state
+    debug_image_topic: /trash/debug_image
+    system_event_topic: /autonomy/system_event
+    publish_debug_image: true
+    show_window: false
+
+
+# ============================================================================
+# 확정된 쓰레기 target 접근 제어
+# ============================================================================
+trash_controller:
+  ros__parameters:
+    # ================================================================
+    # FIELD TUNING: 현장 주행 중 우선 조정할 값
+    # ================================================================
+
+    # 조향 PD. 반응이 빠르면 kp↓. kd는 소폭만 올리고 반대 조향이면 낮춘다.
+    steering_kp: 7.0
+    steering_kd: 1.0
+    # bbox 오차 저역통과 필터. 작을수록 부드럽지만 반응은 느려진다.
+    error_filter_alpha: 0.15
+    # bbox 미분값 필터. 작을수록 D항 순간 반전과 tracker 노이즈 감소.
+    derivative_filter_alpha: 0.20
+    # 조향 명령 최대 변화속도(deg/s). 지그재그가 심하면 낮춘다.
+    max_steering_rate_deg_per_sec: 5.0
+
+    # 멀고 중앙일 때 최대 출력 / 정렬·근접 시 최소 전진 출력.
+    approach_output: 3.0
+    minimum_approach_output: 1.5
+
+    # bbox 면적비 감속. 검증 영상 confirmed bbox는 약 0.15%-1.12%.
+    slow_area_ratio: 0.003       # 0.30%부터 감속
+    full_slow_area_ratio: 0.010  # 1.00%부터 최소 출력
+
+    # bbox 폭이 커질수록 중앙 허용 폭이 넓어지는 가변 deadband.
+    center_deadband_min: 0.03
+    center_deadband_max: 0.12
+    center_deadband_bbox_gain: 0.8
+    # bbox 아래끝이 화면 75%를 지나면 수거 직전으로 보고 직진 영역 확대.
+    bottom_deadband_start_ratio: 0.75
+    bottom_deadband_max: 0.35
+    # 화면 맨 아래에서 허용할 최대 조향 비율(15deg * 0.35 = 5.25deg).
+    bottom_steering_scale: 0.35
+    # 아래쪽에서 기존 조향을 빠르게 0도로 되돌리고 출력 상승을 방지.
+    bottom_steering_decay_deg_per_sec: 20.0
+    bottom_output_max: 1.5
+
+    # 접근 출력 변화율(/s): 급가속은 천천히, 필요 감속은 더 빠르게.
+    max_output_accel_per_sec: 0.8
+    max_output_decel_per_sec: 2.0
+
+    # 화면 좌우 가장자리에서는 반드시 화면 안쪽으로 조향하며 감속.
+    target_edge_margin_ratio: 0.15
+    edge_min_steering_deg: 5.0
+    edge_output_scale: 0.70
+
+    # 잠깐 놓치면 마지막 bbox를 추종하지 않고 조향을 0도로 감쇠.
+    temp_lost_steering_decay_deg_per_sec: 20.0
+    temp_lost_output: 1.0
+
+    # LOCKED가 이 시간 이상 연속으로 보인 뒤 사라지면 수거 직진 확정.
+    collection_lock_min_duration: 3.0
+    # 수거망을 통과하도록 조향 0도로 유지할 시간과 추진 출력.
+    collection_drive_duration: 3.0
+    collection_output: 1.5
+
+    # ================================================================
+    # ADVANCED / SYSTEM: 설치·안전 timeout·토픽
+    # ================================================================
+    steering_sign: 1.0       # 좌우 조향이 반대면 -1.0
+    max_steering_deg: 15.0
+    control_rate: 20.0
+    global_command_timeout: 0.5
+    target_timeout: 0.5
+
+    target_topic: /trash/target
+    target_state_topic: /trash/target_state
+    global_command_topic: /autonomy/global_cmd
+    final_command_topic: /boat/cmd
+    mode_topic: /autonomy/mode
+    control_config_topic: /autonomy/trash_control_config
+
+
+# ============================================================================
+# 웹 대시보드: 주행에는 영향 없고 표시 품질/부하만 조정
+# ============================================================================
+autonomy_dashboard:
+  ros__parameters:
+    # FIELD TUNING: Jetson/네트워크 부하가 크면 둘 다 낮춘다.
+    jpeg_quality: 70
+    max_stream_fps: 10.0
+
+    # deadband 표시는 controller가 발행한 실제 적용값을 사용한다.
+    trash_control_config_topic: /autonomy/trash_control_config
+
+    # GPS 수질 히트맵 표시용 샘플 버퍼(제어/로그에는 영향 없음).
+    heatmap_sample_interval: 1.0
+    heatmap_max_samples: 600
+    # 이 반경(m) 안의 새 측정값은 원을 추가하지 않고 기존 셀을 갱신.
+    heatmap_merge_radius_m: 1.0
+    # 이 거리(m) 이내의 연속 측정 셀은 부드러운 띠로 연결.
+    heatmap_connect_distance_m: 3.0
+    heatmap_ph_min: 6.0
+    heatmap_ph_max: 9.0
+    heatmap_do_min: 0.0
+    heatmap_do_max: 12.0
+    # 탁도 히트맵 색상 범위(NTU). 현장 센서 범위에 맞춰 조정.
+    heatmap_turbidity_min: 0.0
+    heatmap_turbidity_max: 100.0
+
+    # ADVANCED / SYSTEM
+    host: 0.0.0.0
+    port: 8080
+    telemetry_topic: /boat/telemetry
+    telemetry_age_topic: /boat/telemetry_age
+    target_topic: /trash/target
+    debug_image_topic: /trash/debug_image
+    mode_topic: /autonomy/mode
+    global_command_topic: /autonomy/global_cmd
+    final_command_topic: /boat/cmd
+    cross_track_error_topic: /autonomy/cross_track_error
+    target_speed_topic: /autonomy/target_speed
+
+    # Dashboard recording buttons call only these allow-listed services.
+    raw_capture_service: /camera/capture
+    raw_start_service: /camera/start_recording
+    raw_stop_service: /camera/stop_recording
+    debug_start_service: /recording/debug/start
+    debug_stop_service: /recording/debug/stop
+    log_start_service: /recording/log/start
+    log_stop_service: /recording/log/stop
